@@ -91,7 +91,7 @@ def index():
             abort(501)
 
         # HMAC requires the key to be bytes, but data is string
-        mac = hmac.new(str(secret), msg=request.data, digestmod="sha1")
+        mac = hmac.new(str(secret).encode('utf-8'), msg=request.data, digestmod="sha1")
 
         # Python prior to 2.7.7 does not have hmac.compare_digest
         if hexversion >= 0x020707F0:
@@ -161,14 +161,15 @@ def index():
     # Possible hooks
     scripts = []
     if branch and name:
-        scripts.append(join(hooks, "{event}-{name}-{branch}".format(**meta)))
+        scripts.append(join(hooks, "{event}-{name}-{branch}.py".format(**meta)))
     if name:
-        scripts.append(join(hooks, "{event}-{name}".format(**meta)))
-    scripts.append(join(hooks, "{event}".format(**meta)))
-    scripts.append(join(hooks, "all"))
-
+        scripts.append(join(hooks, "{event}-{name}.py".format(**meta)))
+    scripts.append(join(hooks, "{event}.py".format(**meta)))
+    scripts.append(join(hooks, "all.py"))
+    #print(scripts)
     # Check permissions
-    scripts = [s for s in scripts if isfile(s) and access(s, X_OK)]
+    scripts = [s for s in scripts if isfile(s)]# and access(s, X_OK)]
+    #print(scripts)
     if not scripts:
         return jsonify({"status": "nop"})
 
@@ -207,4 +208,4 @@ def index():
 
 
 if __name__ == "__main__":
-    application.run(debug=True, host="0.0.0.0")
+    application.run(debug=True, host="0.0.0.0", port=5001)
