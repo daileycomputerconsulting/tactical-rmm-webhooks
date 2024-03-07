@@ -9,7 +9,7 @@ from time import sleep
 from requests import request
 from requests.exceptions import SSLError, ConnectionError
 
-from tactical_rmm.github_api import get_script_hashes
+from .github_api import get_script_hashes
 
 TRMM_TOKEN = env.get('TRMM_TOKEN', None)
 TRMM_URL = env.get('TRMM_URL', None)

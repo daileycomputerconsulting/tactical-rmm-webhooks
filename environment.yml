@@ -1,0 +1,44 @@
+name: tactical-rmm-webhooks
+channels:
+  - conda-forge
+dependencies:
+  - bzip2
+  - ca-certificates
+  - libexpat
+  - libffi
+  - libsqlite
+  - libzlib
+  - ncurses
+  - openssl
+  - pip
+  - python
+  - readline
+  - setuptools
+  - tk
+  - tzdata
+  - wheel
+  - xz
+  - pip:
+      - blinker
+      - certifi
+      - cffi
+      - charset-normalizer
+      - click
+      - cryptography
+      - deprecated
+      - flask
+      - gunicorn
+      - idna
+      - itsdangerous
+      - jinja2
+      - markupsafe
+      - packaging
+      - pycparser
+      - pygithub
+      - pyjwt
+      - pynacl
+      - requests
+      - typing-extensions
+      - urllib3
+      - werkzeug
+      - wrapt

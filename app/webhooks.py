@@ -106,7 +106,7 @@ def index():
 
     # Implement ping
     event = request.headers.get("X-GitHub-Event", "ping")
-    if event == "ping":
+    if event == "ping" or event == "push":
         if has_hook(event):
             return jsonify(run_hook(event))
         return jsonify({"msg": "pang"})
@@ -169,6 +169,7 @@ def index():
     #print(scripts)
     # Check permissions
     scripts = [s for s in scripts if isfile(s)]# and access(s, X_OK)]
+    application.logger.info("running...")
     #print(scripts)
     if not scripts:
         return jsonify({"status": "nop"})
