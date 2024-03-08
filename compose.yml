@@ -1,0 +1,18 @@
+---
+version: "3.8"
+services:
+  tactical-rmm-webhooks:
+    image: tactical-rmm-webhooks:latest
+    container_name: tactical-rmm-webhooks
+    stdin_open: true
+    tty: true
+    ports:
+      - 5001:5001
+    environment:
+      - TRMM_TOKEN=
+      - TRMM_URL=
+      - GH_TOKEN=
+      - GH_ORG=
+      - GH_REPO=tactical-rmm-scripts
+      - TZ=America/Los_Angeles
+    restart: "unless-stopped"

@@ -1,4 +1,4 @@
-name: tactical-rmm-webhooks
+name: tactical_rmm_webhooks
 channels:
   - conda-forge
 dependencies:

@@ -238,6 +238,7 @@ def compare_scripts():
             print("%s is same!" % trmm_script['name'])
     for g, t in updated_scripts:
         patch_script_from_gh(g, t)
+    print('done')
 
 def main(argv):
     global TRMM_TOKEN

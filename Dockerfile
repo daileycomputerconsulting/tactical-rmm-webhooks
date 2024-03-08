@@ -1,16 +1,3 @@
-FROM python:3.12-alpine
-#FROM python:3.10-slim
-
-WORKDIR /app
-
-COPY requirements.txt /app
-RUN pip install -r requirements.txt
-
-COPY . /app
-
-EXPOSE 5000
-CMD ["python3", "webhooks.py"]
-
 # The build-stage image:
 FROM continuumio/miniconda3 AS build
 
@@ -23,7 +10,7 @@ RUN conda install -c conda-forge conda-pack
 
 # Use conda-pack to create a standalone enviornment
 # in /venv:
-RUN conda-pack -n audiotranscriber -o /tmp/env.tar && \
+RUN conda-pack -n tactical_rmm_webhooks -o /tmp/env.tar && \
   mkdir /venv && cd /venv && tar xf /tmp/env.tar && \
   rm /tmp/env.tar
 
@@ -40,11 +27,12 @@ FROM debian:latest AS runtime
 
 # Copy /venv from the previous stage:
 COPY --from=build /venv /venv
-COPY stream_to_chunks/stream_to_chunks.py /app/stream_to_chunks.py
+COPY ./app /app
 
-EXPOSE 5000
 # When image is run, run the code with the environment
 # activated:
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT source /venv/bin/activate && \
+            cd /app && \
+            gunicorn --bind 0.0.0.0:5001 wsgi:application
            
