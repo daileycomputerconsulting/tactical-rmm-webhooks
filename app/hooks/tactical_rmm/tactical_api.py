@@ -11,6 +11,8 @@ from requests.exceptions import SSLError, ConnectionError
 
 from .github_api import get_script_hashes
 
+#from github_api import get_script_hashes
+
 TRMM_TOKEN = env.get('TRMM_TOKEN', None)
 TRMM_URL = env.get('TRMM_URL', None)
 
@@ -131,10 +133,11 @@ def create_script(script_body: str, script_metadata: dict):
     query = build_query('pubish_script')
     if script_metadata is None:
         query['data']['name'] = 'unnamed script - %s' % uuid.uuid4()
-
     else:
         query['data'] = script_metadata
-    query['data']['script_body'] = script_body
+
+    if script_body is not None:
+        query['data']['script_body'] = script_body
     ret = api_call(query)
     return ret['content'], ret['status']
 
@@ -214,7 +217,6 @@ def compare_scripts():
     api['auth']['key'] = TRMM_TOKEN
 
     updated_scripts = []
-    new_scripts = []
 
     trmm_scripts = get_scripts_with_content()
     github_scripts = get_script_hashes()
@@ -222,6 +224,8 @@ def compare_scripts():
     gh_list = [ s['script']['name'] for s in github_scripts]
     trmm_list = [ s['name'] for s in trmm_scripts]
     common_items = list(set(gh_list) & set(trmm_list))
+
+    new_scripts = list(set(gh_list) - set(common_items))
 
     for c in common_items:
         gh_script = get_gh_script(c, github_scripts)
@@ -238,6 +242,10 @@ def compare_scripts():
             print("%s is same!" % trmm_script['name'])
     for g, t in updated_scripts:
         patch_script_from_gh(g, t)
+    for n in new_scripts:
+        new_script = get_gh_script(n, github_scripts)['script']
+        print("%s is new!" % new_script['name'])
+        create_script(script_body=None, script_metadata=new_script)
     print('done')
 
 def main(argv):

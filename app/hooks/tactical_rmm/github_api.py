@@ -39,7 +39,7 @@ def get_script_hashes():
     EXTENSIONS = {
         'py': 'python',
         'ps1': 'powershell',
-        'bat': 'batch'
+        'bat': 'cmd'
     }
 
     for s in repo_contents:
