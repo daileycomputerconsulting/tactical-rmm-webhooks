@@ -2,7 +2,7 @@ Tactical RMM Webhooks
 
 Manage your TRMM scripts using git!
 
-Will patch scripts in tactical rmm upon push to main when changes are detected
+Will patch scripts in tactical rmm upon push to main on your chosen repo when changes are detected
 
 deploy with docker, gunicorn, or in debug mode with flask
 
@@ -20,4 +20,4 @@ GH_TOKEN
 
 GH_ORG
 
-GH_REPO=tactical-rmm-scripts
+GH_REPO=tactical-rmm-scripts-example
