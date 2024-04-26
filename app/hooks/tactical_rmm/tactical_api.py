@@ -221,6 +221,10 @@ def compare_scripts():
     trmm_scripts = get_scripts_with_content()
     github_scripts = get_script_hashes()
 
+    if len(trmm_scripts) == 0 or len(github_scripts) == 0:
+        print('error getting scripts!')
+        return
+
     gh_list = [ s['script']['name'] for s in github_scripts]
     trmm_list = [ s['name'] for s in trmm_scripts]
     common_items = list(set(gh_list) & set(trmm_list))
