@@ -155,7 +155,7 @@ def get_scripts_with_content():
     all_scripts, _ = get_scripts()
     scripts = []
     for s in all_scripts:
-        if s['script_type'] == 'userdefined':
+        if s['script_type'] == 'userdefined' and 'hidden' in s and not s['hidden']:
             code, _ = get_script_content(s['id'])
             new_script = {
                 "name": s['name'],
