@@ -15,7 +15,7 @@
 # under the License.
 import logging
 from sys import stderr, hexversion
-
+import socket
 import hmac
 from json import loads, dumps
 from subprocess import Popen, PIPE
@@ -209,4 +209,5 @@ def index():
 
 
 if __name__ == "__main__":
+    socket.setdefaulttimeout(120) # seconds
     application.run(debug=True, host="0.0.0.0", port=5001)
