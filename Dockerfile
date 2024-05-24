@@ -34,5 +34,5 @@ COPY ./app /app
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT source /venv/bin/activate && \
             cd /app && \
-            gunicorn --bind 0.0.0.0:5001 wsgi:application
+            gunicorn --bind 0.0.0.0:5001 --timeout 120 wsgi:application
            
