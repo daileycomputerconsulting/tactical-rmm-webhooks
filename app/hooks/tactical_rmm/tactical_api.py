@@ -162,7 +162,7 @@ def get_scripts_with_content():
                 "shell": s["shell"],
                 "default_timeout": s['default_timeout'],
                 "args": s['args'],
-                "script_body": code['code'],
+                "script_body": code['code'].strip() if 'code' in code else '',
                 "run_as_user": s['run_as_user'],
                 "env_vars": s['env_vars'],
                 "description": s['description'],

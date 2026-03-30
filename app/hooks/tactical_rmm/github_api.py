@@ -48,7 +48,7 @@ def get_script_hashes():
         elif str(s.name).endswith('.json'):
             json_files[str(Path(s.name).stem)] = json.loads(str(s.decoded_content, 'utf-8'))
         else:
-            script_files.append((s.name, str(s.decoded_content, 'utf-8')))
+            script_files.append((s.name, str(s.decoded_content, 'utf-8').strip()))
 
     for s in script_files:
         file_hash = (hashlib.sha1(s[1].encode())).hexdigest()
